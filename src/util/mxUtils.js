@@ -301,20 +301,11 @@ export class mxUtils {
     return doc;
   }
 
-  static parseXml = (function () {
-    if (window.DOMParser) {
-      return function (xml) {
-        var parser = new DOMParser();
-        return parser.parseFromString(xml, 'text/xml');
-      };
-    } else {
-      return function (xml) {
-        var doc = mxUtils.createMsXmlDocument();
-        doc.loadXML(xml);
-        return doc;
-      };
-    }
-  })();
+  static parseXml(xml) {
+    var parser = new DOMParser();
+    return parser.parseFromString(xml, 'text/xml');
+  }
+
   static clearSelection = (function () {
     if (document.selection) {
       return function () {

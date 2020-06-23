@@ -1,5 +1,3 @@
-import { mxUtils } from '@mxgraph/util/mxUtils';
-
 export class mxObjectIdentity {
   static FIELD_NAME = 'mxObjectId';
   static counter = 0;
@@ -8,7 +6,7 @@ export class mxObjectIdentity {
     if (obj != null) {
       if (obj[mxObjectIdentity.FIELD_NAME] == null) {
         if (typeof obj === 'object') {
-          var ctor = mxUtils.getFunctionName(obj.constructor);
+          var ctor = getFunctionName(obj.constructor);
           obj[mxObjectIdentity.FIELD_NAME] = ctor + '#' + mxObjectIdentity.counter++;
         } else if (typeof obj === 'function') {
           obj[mxObjectIdentity.FIELD_NAME] = 'Function#' + mxObjectIdentity.counter++;
@@ -26,4 +24,32 @@ export class mxObjectIdentity {
       delete obj[mxObjectIdentity.FIELD_NAME];
     }
   }
+}
+
+function getFunctionName(f) {
+  var str = null;
+
+  if (f != null) {
+    if (f.name != null) {
+      str = f.name;
+    } else {
+      str = f.toString().trim();
+
+      if (/^function\s/.test(str)) {
+        str = ltrim(str.substring(9));
+        var idx2 = str.indexOf('(');
+
+        if (idx2 > 0) {
+          str = str.substring(0, idx2);
+        }
+      }
+    }
+  }
+
+  return str;
+}
+
+function ltrim(str, chars) {
+  chars = chars || '\\s';
+  return str != null ? str.replace(new RegExp('^[' + chars + ']+', 'g'), '') : null;
 }

@@ -1,29 +1,10 @@
 import { mxClient } from '@mxgraph/mxClient';
-import { mxUtils } from '@mxgraph/util/mxUtils';
 
 export class mxXmlRequest {
   binary = false;
   withCredentials = false;
   request = null;
   decodeSimulateValues = false;
-  create = (function () {
-    if (window.XMLHttpRequest) {
-      return function () {
-        var req = new XMLHttpRequest();
-
-        if (this.isBinary() && req.overrideMimeType) {
-          req.overrideMimeType('text/plain; charset=x-user-defined');
-        }
-
-        return req;
-      };
-    } else if (typeof ActiveXObject != 'undefined') {
-      return function () {
-        // eslint-disable-next-line no-undef
-        return new ActiveXObject('Microsoft.XMLHTTP');
-      };
-    }
-  })();
 
   constructor(url, params, method, async, username, password) {
     this.url = url;
@@ -32,6 +13,44 @@ export class mxXmlRequest {
     this.async = async != null ? async : true;
     this.username = username;
     this.password = password;
+  }
+
+  static get(url, onload, onerror, binary, timeout, ontimeout, headers) {
+    var req = new mxXmlRequest(url, null, 'GET');
+    var setRequestHeaders = req.setRequestHeaders;
+
+    if (headers) {
+      req.setRequestHeaders = function (request, params) {
+        setRequestHeaders.apply(this, arguments);
+
+        for (var key in headers) {
+          request.setRequestHeader(key, headers[key]);
+        }
+      };
+    }
+
+    if (binary != null) {
+      req.setBinary(binary);
+    }
+
+    req.send(onload, onerror, timeout, ontimeout);
+    return req;
+  }
+
+  static load(url) {
+    var req = new mxXmlRequest(url, null, 'GET', false);
+    req.send();
+    return req;
+  }
+
+  create() {
+    var req = new XMLHttpRequest();
+
+    if (this.isBinary() && req.overrideMimeType) {
+      req.overrideMimeType('text/plain; charset=x-user-defined');
+    }
+
+    return req;
   }
 
   isBinary() {
@@ -64,7 +83,8 @@ export class mxXmlRequest {
     var xml = this.request.responseXML;
 
     if (document.documentMode >= 9 || xml == null || xml.documentElement == null) {
-      xml = mxUtils.parseXml(this.request.responseText);
+      var parser = new DOMParser();
+      xml = parser.parseFromString(this.request.responseText, 'text/xml');
     }
 
     return xml;
@@ -150,7 +170,14 @@ export class mxXmlRequest {
         var textarea = doc.createElement('textarea');
         textarea.setAttribute('wrap', 'off');
         textarea.setAttribute('name', name);
-        mxUtils.write(textarea, value);
+
+        var doc = textarea.ownerDocument;
+        var node = doc.createTextNode(value);
+
+        if (textarea != null) {
+          textarea.appendChild(node);
+        }
+
         form.appendChild(textarea);
       }
     }

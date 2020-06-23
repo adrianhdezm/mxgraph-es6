@@ -1,5 +1,5 @@
 import { mxConstants } from '@mxgraph/util/mxConstants';
-import { mxUtils } from '@mxgraph/util/mxUtils';
+import { mxXmlRequest } from '@mxgraph/util/mxXmlRequest';
 import { mxClient } from '@mxgraph/mxClient';
 
 export class mxResources {
@@ -11,7 +11,7 @@ export class mxResources {
 
   static isLanguageSupported(lan) {
     if (mxClient.languages != null) {
-      return mxUtils.indexOf(mxClient.languages, lan) >= 0;
+      return mxClient.languages.indexOf(lan) >= 0;
     }
 
     return true;
@@ -51,7 +51,7 @@ export class mxResources {
       var loadSpecialBundle = function () {
         if (specialBundle != null) {
           if (callback) {
-            mxUtils.get(
+            mxXmlRequest.get(
               specialBundle,
               function (req) {
                 mxResources.parse(req.getText());
@@ -63,7 +63,7 @@ export class mxResources {
             );
           } else {
             try {
-              var req = mxUtils.load(specialBundle);
+              var req = mxXmlRequest.load(specialBundle);
 
               if (req.isReady()) {
                 mxResources.parse(req.getText());
@@ -79,7 +79,7 @@ export class mxResources {
 
       if (defaultBundle != null) {
         if (callback) {
-          mxUtils.get(
+          mxXmlRequest.get(
             defaultBundle,
             function (req) {
               mxResources.parse(req.getText());
@@ -91,7 +91,7 @@ export class mxResources {
           );
         } else {
           try {
-            var req = mxUtils.load(defaultBundle);
+            var req = mxXmlRequest.load(defaultBundle);
 
             if (req.isReady()) {
               mxResources.parse(req.getText());
