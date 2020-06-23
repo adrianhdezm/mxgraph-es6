@@ -1,0 +1,39 @@
+{
+  "name": "mxgraph-es6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier \"**/*.*\" --write",
+    "lint": "eslint . --ext .js",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianhdezm/mxgraph-es6.git"
+  },
+  "keywords": [],
+  "author": "Adrian Hernandez-Mendez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianhdezm/mxgraph-es6/issues"
+  },
+  "homepage": "https://github.com/adrianhdezm/mxgraph-es6#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.3",
+    "@babel/plugin-transform-classes": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^7.3.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
+    "rollup": "^2.18.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-copy": "^3.3.0"
+  }
+}

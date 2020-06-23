@@ -1,0 +1,14 @@
+# Files types prettier should format
+*.*
+!*.json
+!*.js
+!*.md
+!*.ts
+!*.yml
+!*.md
+!/.vscode
+
+# Files to ignore
+package-lock.json
+/node_modules/
+mxgraph
