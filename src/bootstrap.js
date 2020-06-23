@@ -54,7 +54,7 @@ export function bootstrap() {
   }
 
   if (typeof window.mxResourceExtension == 'undefined') {
-    window.mxResourceExtension = '.txt';
+    mxResources.extension = '.txt';
   }
 
   if (typeof window.mxLoadStylesheets == 'undefined') {

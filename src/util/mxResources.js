@@ -4,7 +4,7 @@ import { mxClient } from '@mxgraph/mxClient';
 
 export class mxResources {
   static resources = {};
-  static extension = window.mxResourceExtension;
+  static extension = '.txt';
   static resourcesEncoded = false;
   static loadDefaultBundle = true;
   static loadSpecialBundle = true;
